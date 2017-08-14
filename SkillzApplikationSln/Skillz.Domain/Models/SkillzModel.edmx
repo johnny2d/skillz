@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SkillzModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="SkillzModelStoreContainer">
+    <EntitySet Name="UserDOSet" EntityType="SkillzModel.Store.UserDOSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SkillDOSet" EntityType="SkillzModel.Store.SkillDOSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SportDOSet" EntityType="SkillzModel.Store.SportDOSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SkillTimeDOSet" EntityType="SkillzModel.Store.SkillTimeDOSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ExserciseDOSet" EntityType="SkillzModel.Store.ExserciseDOSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserSkill" Association="SkillzModel.Store.UserSkill">
+      <End Role="UserDO" EntitySet="UserDOSet" />
+      <End Role="SkillDO" EntitySet="SkillDOSet" />
+    </AssociationSet>
+    <AssociationSet Name="SkillSport" Association="SkillzModel.Store.SkillSport">
+      <End Role="SkillDO" EntitySet="SkillDOSet" />
+      <End Role="Sport" EntitySet="SportDOSet" />
+    </AssociationSet>
+    <AssociationSet Name="SkillSkillTime" Association="SkillzModel.Store.SkillSkillTime">
+      <End Role="SkillDO" EntitySet="SkillDOSet" />
+      <End Role="SkillTimeDO" EntitySet="SkillTimeDOSet" />
+    </AssociationSet>
+    <AssociationSet Name="SportExsercise" Association="SkillzModel.Store.SportExsercise">
+      <End Role="SportDO" EntitySet="SportDOSet" />
+      <End Role="ExserciseDO" EntitySet="ExserciseDOSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserDOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SkillDOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="Sport_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SportDOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SkillTimeDOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkillDOId" Type="int" Nullable="false" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ExserciseDOSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExerciseDescription" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SportDOId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserSkill">
+    <End Role="UserDO" Type="SkillzModel.Store.UserDOSet" Multiplicity="1" />
+    <End Role="SkillDO" Type="SkillzModel.Store.SkillDOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserDO">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SkillDO">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SkillSport">
+    <End Role="SkillDO" Type="SkillzModel.Store.SkillDOSet" Multiplicity="*" />
+    <End Role="Sport" Type="SkillzModel.Store.SportDOSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Sport">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SkillDO">
+        <PropertyRef Name="Sport_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SkillSkillTime">
+    <End Role="SkillDO" Type="SkillzModel.Store.SkillDOSet" Multiplicity="1" />
+    <End Role="SkillTimeDO" Type="SkillzModel.Store.SkillTimeDOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SkillDO">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SkillTimeDO">
+        <PropertyRef Name="SkillDOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SportExsercise">
+    <End Role="SportDO" Type="SkillzModel.Store.SportDOSet" Multiplicity="1" />
+    <End Role="ExserciseDO" Type="SkillzModel.Store.ExserciseDOSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SportDO">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ExserciseDO">
+        <PropertyRef Name="SportDOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SkillzModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SkillzModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="User" EntityType="SkillzModel.UserDO" />
+          <EntitySet Name="Skill" EntityType="SkillzModel.SkillDO" />
+          <AssociationSet Name="UserSkill" Association="SkillzModel.UserSkill">
+            <End EntitySet="User" Role="UserDO" />
+            <End EntitySet="Skill" Role="SkillDO" />
+          </AssociationSet>
+          <EntitySet Name="Sport" EntityType="SkillzModel.SportDO" />
+          <AssociationSet Name="SkillSport" Association="SkillzModel.SkillSport">
+            <End EntitySet="Skill" Role="SkillDO" />
+            <End EntitySet="Sport" Role="Sport" />
+          </AssociationSet>
+          <EntitySet Name="SkillTime" EntityType="SkillzModel.SkillTimeDO" />
+          <AssociationSet Name="SkillSkillTime" Association="SkillzModel.SkillSkillTime">
+            <End Role="SkillDO" EntitySet="Skill" />
+            <End Role="SkillTimeDO" EntitySet="SkillTime" />
+          </AssociationSet>
+          <EntitySet Name="Exercise" EntityType="SkillzModel.ExerciseDO" />
+          <AssociationSet Name="SportExsercise" Association="SkillzModel.SportExsercise">
+            <End Role="SportDO" EntitySet="Sport" />
+            <End Role="ExserciseDO" EntitySet="Exercise" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserDO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="SkillzModel.UserSkill" FromRole="UserDO" ToRole="SkillDO" />
+        </EntityType>
+        <EntityType Name="SkillDO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="User" Relationship="SkillzModel.UserSkill" FromRole="SkillDO" ToRole="UserDO" />
+          <NavigationProperty Name="Sport" Relationship="SkillzModel.SkillSport" FromRole="SkillDO" ToRole="Sport" />
+          <NavigationProperty Name="SkillTime" Relationship="SkillzModel.SkillSkillTime" FromRole="SkillDO" ToRole="SkillTimeDO" />
+          <Property Name="Description" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="UserSkill">
+          <End Type="SkillzModel.UserDO" Multiplicity="1" Role="UserDO" />
+          <End Type="SkillzModel.SkillDO" Multiplicity="*" Role="SkillDO" />
+        </Association>
+        <EntityType Name="SportDO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Skill" Relationship="SkillzModel.SkillSport" FromRole="Sport" ToRole="SkillDO" />
+          <NavigationProperty Name="Exsercise" Relationship="SkillzModel.SportExsercise" FromRole="SportDO" ToRole="ExserciseDO" />
+        </EntityType>
+        <Association Name="SkillSport">
+          <End Type="SkillzModel.SkillDO" Multiplicity="1" Role="SkillDO" />
+          <End Type="SkillzModel.SportDO" Multiplicity="1" Role="Sport" />
+        </Association>
+        <EntityType Name="SkillTimeDO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Skill" Relationship="SkillzModel.SkillSkillTime" FromRole="SkillTimeDO" ToRole="SkillDO" />
+          <Property Name="SkillDOId" Type="Int32" Nullable="false" />
+          <Property Name="Time" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="SkillSkillTime">
+          <End Type="SkillzModel.SkillDO" Role="SkillDO" Multiplicity="1" />
+          <End Type="SkillzModel.SkillTimeDO" Role="SkillTimeDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SkillDO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SkillTimeDO">
+              <PropertyRef Name="SkillDOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ExerciseDO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExerciseDescription" Type="String" Nullable="false" />
+          <NavigationProperty Name="Sport" Relationship="SkillzModel.SportExsercise" FromRole="ExserciseDO" ToRole="SportDO" />
+          <Property Name="SportDOId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="SportExsercise">
+          <End Type="SkillzModel.SportDO" Role="SportDO" Multiplicity="1" />
+          <End Type="SkillzModel.ExerciseDO" Role="ExserciseDO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SportDO">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ExserciseDO">
+              <PropertyRef Name="SportDOId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SkillzModelStoreContainer" CdmEntityContainer="SkillzModelContainer">
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="IsTypeOf(SkillzModel.UserDO)">
+        <MappingFragment StoreEntitySet="UserDOSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skill">
+      <EntityTypeMapping TypeName="IsTypeOf(SkillzModel.SkillDO)">
+        <MappingFragment StoreEntitySet="SkillDOSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sport">
+      <EntityTypeMapping TypeName="IsTypeOf(SkillzModel.SportDO)">
+        <MappingFragment StoreEntitySet="SportDOSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SkillTime">
+      <EntityTypeMapping TypeName="IsTypeOf(SkillzModel.SkillTimeDO)">
+        <MappingFragment StoreEntitySet="SkillTimeDOSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SkillDOId" ColumnName="SkillDOId" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exercise">
+      <EntityTypeMapping TypeName="IsTypeOf(SkillzModel.ExerciseDO)">
+        <MappingFragment StoreEntitySet="ExserciseDOSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ExerciseDescription" ColumnName="ExerciseDescription" />
+          <ScalarProperty Name="SportDOId" ColumnName="SportDOId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserSkill" TypeName="SkillzModel.UserSkill" StoreEntitySet="SkillDOSet">
+      <EndProperty Name="UserDO">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="SkillDO">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SkillSport" TypeName="SkillzModel.SkillSport" StoreEntitySet="SkillDOSet">
+      <EndProperty Name="Sport">
+        <ScalarProperty Name="Id" ColumnName="Sport_Id" />
+      </EndProperty>
+      <EndProperty Name="SkillDO">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

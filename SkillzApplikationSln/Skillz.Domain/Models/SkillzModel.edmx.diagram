@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="9630c5ab22f84e65a63c6f2adb268d4e" Name="Diagram1" ZoomLevel="86" >
+        <EntityTypeShape EntityType="SkillzModel.UserDO" Width="1.5" PointX="3.625" PointY="0.625" />
+        <EntityTypeShape EntityType="SkillzModel.SkillDO" Width="1.5" PointX="3.625" PointY="2.75" />
+        <AssociationConnector Association="SkillzModel.UserSkill" />
+        <EntityTypeShape EntityType="SkillzModel.SportDO" Width="1.5" PointX="0.875" PointY="2.75" />
+        <AssociationConnector Association="SkillzModel.SkillSport" />
+        <EntityTypeShape EntityType="SkillzModel.SkillTimeDO" Width="1.5" PointX="6" PointY="3.375" />
+        <AssociationConnector Association="SkillzModel.SkillSkillTime" />
+        <EntityTypeShape EntityType="SkillzModel.ExerciseDO" Width="1.5" PointX="0.875" PointY="5.25" />
+        <AssociationConnector Association="SkillzModel.SportExsercise" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
